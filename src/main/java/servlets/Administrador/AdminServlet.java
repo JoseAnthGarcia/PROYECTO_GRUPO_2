@@ -325,16 +325,22 @@ public class AdminServlet extends HttpServlet {
 
                     ArrayList<PedidoBean> listaPedidos = bodegaDao.buscarBodegaconPedido(rucBodega);
 
-                    if(!aTiempo && bodegaDao.validarPerteneceAdmin(rucBodega, idAdminActual)){
-                        boolean bloqueo = Boolean.parseBoolean(request.getParameter("bloqueo"));
-                        request.getSession().setAttribute("accion", bloqueo);
-                        AdminDao.actualizarEstadoBodega(rucBodega,bloqueo);
-                        response.sendRedirect(request.getContextPath() +"/AdminServlet?accion=listar");
+                    if(bodegaDao.validarPerteneceAdmin(rucBodega, idAdminActual)){
+                        if(!aTiempo){
+                            boolean bloqueo = Boolean.parseBoolean(request.getParameter("bloqueo"));
+                            request.getSession().setAttribute("accion", bloqueo);
+                            AdminDao.actualizarEstadoBodega(rucBodega,bloqueo);
+                            response.sendRedirect(request.getContextPath() +"/AdminServlet?accion=listar");
+                        }else{
+                            request.getSession().setAttribute("errorBloquearBodega", true);
+                            request.getSession().setAttribute("listaPedidosPendiente",listaPedidos);
+                            response.sendRedirect(request.getContextPath() +"/AdminServlet?accion=listar");
+                        }
                     }else{
-                        request.getSession().setAttribute("errorBloquearBodega", true);
-                        request.getSession().setAttribute("listaPedidosPendiente",listaPedidos);
                         response.sendRedirect(request.getContextPath() +"/AdminServlet?accion=listar");
                     }
+
+
                     break;
                 case "mostrarBodega":
                     String rucBodega2 = request.getParameter("ruc");
