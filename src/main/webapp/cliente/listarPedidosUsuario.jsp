@@ -78,7 +78,7 @@
                 <th>Estado</th>
                 <th>Cancelar pedido</th>
             </tr>
-            <% for (PedidoBean pedido: listaPedidos){%>
+            <% for (PedidoBean  pedido: listaPedidos){%>
             <tr>
                 <td><a href="<%=request.getContextPath()%>/UsuarioServlet?accion=verDetallesPedido&codigoPedido=<%=pedido.getCodigo()%>" ><%=pedido.getCodigo()%></a> </td>
                 <td>S/. <%=pedido.getTotalApagar()%></td>
@@ -88,7 +88,7 @@
                 <% if(pedido.getEstado().equalsIgnoreCase("Pendiente")){%>
                     <td>
                     <a onclick="return confirm('¿Estas seguro que deseas cancelar tu pedido?')"
-                       href="<%=request.getContextPath()%>/UsuarioServlet?accion=cancelarPedido&codigoPedido=<%=Integer.parseInt(pedido.getCodigo())%>"
+                       href="<%=request.getContextPath()%>/UsuarioServlet?accion=cancelarPedido&codigoPedido=<%=pedido.getCodigo()%>"
                        class="btn btn-danger">Cancelar</a></td>
                 <% }else{ %>
                 <td></td>

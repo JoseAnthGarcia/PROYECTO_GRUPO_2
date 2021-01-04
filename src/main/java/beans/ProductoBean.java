@@ -11,6 +11,7 @@ public class ProductoBean {
     private int stock;
     private BigDecimal precioProducto;
     private InputStream foto;
+    private String estado;
 
 
 
@@ -63,5 +64,12 @@ public class ProductoBean {
     public void setFoto(InputStream foto) {
         this.foto = foto;
     }
-    
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

@@ -527,6 +527,7 @@ public class UsuarioDao extends BaseDao {
                     producto.setDescripcion(rs.getString("descripcion"));
                     producto.setPrecioProducto(rs.getBigDecimal("precioUnitario"));
                     producto.setStock(rs.getInt("stock"));
+                    producto.setEstado(rs.getString("estado"));
                 }
             }
         } catch (SQLException throwables) {
@@ -942,6 +943,24 @@ public class UsuarioDao extends BaseDao {
             throwables.printStackTrace();
         }
         return pedido;
+    }
+
+    public boolean verificarPedidoUsuario(String codigo, int idUsuario){
+        boolean pertenece = false;
+        String sql = "SELECT * FROM pedido WHERE codigo=? AND idUsuario=?;";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setString(1, codigo);
+            pstmt.setInt(2, idUsuario);
+            try(ResultSet rs = pstmt.executeQuery()){
+                if(rs.next()){
+                    pertenece = true;
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return pertenece;
     }
 
     public void cancelarPedido(String codigo){

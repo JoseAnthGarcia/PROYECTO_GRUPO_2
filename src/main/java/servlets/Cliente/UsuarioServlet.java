@@ -844,7 +844,9 @@ public class UsuarioServlet extends HttpServlet {
                 case "cancelarPedido": //cancelarPedido
 
                     String codigoPedido2 = request.getParameter("codigoPedido");
-                    if(usuarioDao.obtenerPedido(codigoPedido2)!=null){
+                    PedidoBean pedidoBean = usuarioDao.obtenerPedido(codigoPedido2);
+                    if(pedidoBean !=null && pedidoBean.getUsuario().equals("Pendiente") &&
+                            usuarioDao.verificarPedidoUsuario(codigoPedido2,usuarioActualId)){
                         boolean aTiempo =  usuarioDao.verificarHoraPedido(codigoPedido2);
                         if(aTiempo){
                             usuarioDao.cancelarPedido(codigoPedido2);
@@ -925,13 +927,16 @@ public class UsuarioServlet extends HttpServlet {
                     } catch (NumberFormatException e) {
                         noNumber = true;
                     }
-                    if (!noNumber ) {
+                    if (!noNumber) {
                         ProductoBean productoBean1 = usuarioDao.obtenerProducto(idProducto);
-                        request.setAttribute("vista","productosDisponibles");
-                        request.setAttribute("producto",productoBean1);
-                        requestDispatcher = request.getRequestDispatcher("/cliente/detalleProducto.jsp");
-
-                        requestDispatcher.forward(request, response);
+                        if(productoBean1.getEstado().equals("Existente")){
+                            request.setAttribute("vista","productosDisponibles");
+                            request.setAttribute("producto",productoBean1);
+                            requestDispatcher = request.getRequestDispatcher("/cliente/detalleProducto.jsp");
+                            requestDispatcher.forward(request, response);
+                        }else{
+                            response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=productosDisponibles");
+                        }
 
                     } else {
                         //accion malintensionado
