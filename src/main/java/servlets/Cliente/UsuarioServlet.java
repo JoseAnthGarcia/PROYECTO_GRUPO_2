@@ -830,7 +830,9 @@ public class UsuarioServlet extends HttpServlet {
 
                     String codigoPedido = request.getParameter("codigoPedido");
 
-                    if(usuarioDao.obtenerPedido(codigoPedido)!=null){
+                    PedidoBean pedido5 = usuarioDao.obtenerPedido(codigoPedido);
+
+                    if(pedido5 !=null && pedido5.getUsuario().getIdUsuario()==usuarioActualId){
                         ArrayList<PedidoHasProductoBean> pedidoProductoLista = usuarioDao.obtenerDetallesPedido(codigoPedido);
                         request.setAttribute("pedidoProductoLista", pedidoProductoLista);
                         requestDispatcher = request.getRequestDispatcher("cliente/detallesPedido.jsp");
