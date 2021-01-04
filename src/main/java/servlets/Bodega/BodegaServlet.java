@@ -410,8 +410,8 @@ public class BodegaServlet extends HttpServlet {
 
                 String codigoPedido = request.getParameter("codigo");
                 UsuarioDao usuarioDao2 = new UsuarioDao();
-
-                if(usuarioDao2.obtenerPedido(codigoPedido)!=null){
+                PedidoBean pedido3 = usuarioDao2.obtenerPedido(codigoPedido);
+                if(pedido3 != null && pedido3.getBodegaBean().getIdBodega()==idBodegaActual){
                     ArrayList<PedidoHasProductoBean> pedidoProductoLista = usuarioDao2.obtenerDetallesPedido(codigoPedido);
                     request.setAttribute("pedidoProductoLista", pedidoProductoLista);
                     view = request.getRequestDispatcher("bodega/mostrarPedido.jsp");
