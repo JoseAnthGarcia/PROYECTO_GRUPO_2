@@ -1,5 +1,7 @@
 package dtos;
 
+import beans.BodegaBean;
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 
@@ -8,7 +10,7 @@ public class ProductosClienteDTO {
     private InputStream foto;
     private String nombreProducto;
     private BigDecimal precio;
-    private String bodega;
+    private BodegaBean bodega;
 
     public InputStream getFoto() {
         return foto;
@@ -42,11 +44,11 @@ public class ProductosClienteDTO {
         this.precio = precio;
     }
 
-    public String getBodega() {
+    public BodegaBean getBodega() {
         return bodega;
     }
 
-    public void setBodega(String bodega) {
+    public void setBodega(BodegaBean bodega) {
         this.bodega = bodega;
     }
 }

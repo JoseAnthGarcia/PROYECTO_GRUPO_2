@@ -67,11 +67,11 @@
         </div>
         <%request.getSession().removeAttribute("noBodegaCercanaEscogida");
         }%>
-        <%if(session.getAttribute("bodegaBoqueada")!=null){%>
+        <%if(session.getAttribute("errorRealizarPedido")!=null){%>
         <div class="alert alert-danger" role="alert">
             Ocurrió un problema al intentar realizar el pedido.
         </div>
-        <%session.removeAttribute("bodegaBoqueada");
+        <%session.removeAttribute("errorRealizarPedido");
         }%>
     </div>
 </div>
