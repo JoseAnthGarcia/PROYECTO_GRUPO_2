@@ -845,7 +845,7 @@ public class UsuarioServlet extends HttpServlet {
 
                     String codigoPedido2 = request.getParameter("codigoPedido");
                     PedidoBean pedidoBean = usuarioDao.obtenerPedido(codigoPedido2);
-                    if(pedidoBean !=null && pedidoBean.getUsuario().equals("Pendiente") &&
+                    if(pedidoBean !=null && pedidoBean.getEstado().equals("Pendiente") &&
                             usuarioDao.verificarPedidoUsuario(codigoPedido2,usuarioActualId)){
                         boolean aTiempo =  usuarioDao.verificarHoraPedido(codigoPedido2);
                         if(aTiempo){
