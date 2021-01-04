@@ -931,7 +931,7 @@ public class UsuarioServlet extends HttpServlet {
                     }
                     if (!noNumber) {
                         ProductoBean productoBean1 = usuarioDao.obtenerProducto(idProducto);
-                        if(productoBean1.getEstado().equals("Existente")){
+                        if(productoBean1!=null && productoBean1.getEstado().equals("Existente")){
                             request.setAttribute("vista","productosDisponibles");
                             request.setAttribute("producto",productoBean1);
                             requestDispatcher = request.getRequestDispatcher("/cliente/detalleProducto.jsp");
