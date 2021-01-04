@@ -935,7 +935,7 @@ public class UsuarioDao extends BaseDao {
                     pedido.setBodegaBean(bodega);
 
                     UsuarioBean usuario = new UsuarioBean();
-                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario = obtenerUsuario(rs.getInt("idUsuario"));
                     pedido.setUsuario(usuario);
                 }
             }

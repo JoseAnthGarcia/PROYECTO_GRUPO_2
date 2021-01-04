@@ -39,32 +39,6 @@ public class BodegaDao extends BaseDao{
         }
     }
 
-    public static int calcularCantPag(){
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=America/Lima";
-
-        // TODO: idBodega se ha hardcodeado
-        String sql = "(count(*)/5) from producto where idBodega=1 AND estado='Existente'";  // numero de paginas
-
-        int cantPag = 0;
-        try (Connection conn = DriverManager.getConnection(url, "root", "root");
-             Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql);) {
-
-            rs.next();
-            cantPag = rs.getInt(1);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return cantPag;
-    }
-
     public static int calcularCantPag(String productName, int idBodega) {
         /**
          *  Para barra de busqueda
@@ -97,38 +71,6 @@ public class BodegaDao extends BaseDao{
     }
 
 
-    public static ArrayList<ProductoBean> listarProductoBodega(int pagina){
-
-        ArrayList<ProductoBean> listaProductos = new ArrayList<>();
-
-        int limit = (pagina-1)*5;
-        String sql = "select idProducto, nombreFoto, rutaFoto, nombreProducto,descripcion,stock,precioUnitario from producto WHERE idBodega=1 AND estado='Existente' limit ?,5;";
-
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);) {
-
-            pstmt.setInt(1, limit);
-
-            try(ResultSet rs = pstmt.executeQuery();){
-                while (rs.next()) {
-                    ProductoBean producto = new ProductoBean();
-                    producto.setId(rs.getInt(1));
-                    /*producto.setNombreFoto(rs.getString(2));
-                    producto.setRutaFoto(rs.getString(3));*/
-                    producto.setNombreProducto(rs.getString(4));
-                    producto.setDescripcion(rs.getString(5));
-                    producto.setStock(rs.getInt(6));
-                    producto.setPrecioProducto(rs.getBigDecimal(7));
-                    listaProductos.add(producto);
-                }
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return listaProductos;
-    }
-
     public static ArrayList<ProductoBean> listarProductoBodega(int pagina, String productName, int idBodega){
         /**
          *  Para barra de busqueda
@@ -138,7 +80,7 @@ public class BodegaDao extends BaseDao{
 
         int limit = (pagina-1)*5;
 
-        String sql = "select idProducto, nombreProducto,descripcion,stock,precioUnitario from producto WHERE idBodega=? AND lower(nombreProducto) like ? AND estado='Existente' limit ?,5;";  // numero de paginas
+        String sql = "select idProducto, nombreProducto,descripcion,stock,precioUnitario from producto WHERE idBodega=? AND lower(nombreProducto) like ? AND estado='Existente' order by nombreProducto asc limit ?,5;";  // numero de paginas
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {

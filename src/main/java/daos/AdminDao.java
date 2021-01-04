@@ -224,6 +224,27 @@ public class AdminDao extends BaseDao{
         return bodega;
     }
 
+    public boolean validarPerteneceAdmin(String ruc, int idAdmin){
+        boolean pertenece = false;
+        String sql = "select * from bodega b\n" +
+                "inner join distrito d\n" +
+                "on b.idDistrito = d.idDistrito \n" +
+                "where b.ruc =? and b.idAdministrador=?;";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setString(1,ruc);
+            pstmt.setInt(2, idAdmin);
+            try(ResultSet rs = pstmt.executeQuery()){
+                if(rs.next()){
+                    pertenece=true;
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return pertenece;
+    }
+
 
     public static boolean pedidoPendiente(String nombreBodega){    //devuelve true si presenta al menos un pedido en estado pendiente
         boolean pedidoPendiente = false;

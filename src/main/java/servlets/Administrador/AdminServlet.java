@@ -339,7 +339,7 @@ public class AdminServlet extends HttpServlet {
                 case "mostrarBodega":
                     String rucBodega = request.getParameter("ruc");
                     AdminDao adminDao = new AdminDao();
-                    if(adminDao.buscarIdBodega(rucBodega)>0){
+                    if(adminDao.buscarIdBodega(rucBodega)>0 && adminDao.validarPerteneceAdmin(rucBodega, idAdminActual)){
                         BodegaBean bodega = adminDao.buscarBodega(rucBodega);
                         request.setAttribute("bodega",bodega);
                         view = request.getRequestDispatcher("administrador/mostrarBodega.jsp");
