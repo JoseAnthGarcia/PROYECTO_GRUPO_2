@@ -941,9 +941,7 @@ public class UsuarioServlet extends HttpServlet {
                         }
 
                     } else {
-                        //accion malintensionado
-                        requestDispatcher = request.getRequestDispatcher("/cliente/default.jsp");
-                        requestDispatcher.forward(request, response);
+                        response.sendRedirect(request.getContextPath() + "/UsuarioServlet?accion=productosDisponibles");
                     }
                     break;
 
