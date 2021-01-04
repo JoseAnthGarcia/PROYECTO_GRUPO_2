@@ -68,7 +68,7 @@
                     <img src="<%=request.getContextPath()%>/ImagenServlet?idProducto=<%=listaProductos.get(j).getIdProducto()%>" width="80px" height="80px"  class="img-thumbnail">
                     <p class="mb-1"><b>Producto: </b> <a href="<%=request.getContextPath()%>/UsuarioServlet?accion=detalleProducto2&productSelect=<%=listaProductos.get(j).getIdProducto()%>"><%=listaProductos.get(j).getNombreProducto()%></a></p>
                     <p class="mb-0"><b>Precio: </b>S/. <%=listaProductos.get(j).getPrecio()%> </p>
-                    <p class="mb-3"><b>Bodega: </b> <%=listaProductos.get(j).getBodega()%> </p>
+                    <p class="mb-3"><b>Bodega: </b><%=listaProductos.get(j).getBodega().getNombreBodega()%> - <%=listaProductos.get(j).getBodega().getDistrito().getNombre()%></p>
                 </div>
             <% } else{ %>
                 <div class="col-sm-3"> <!-- Probar medidas "sm-3"? -->
