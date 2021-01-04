@@ -425,8 +425,10 @@ public class BodegaServlet extends HttpServlet {
                 break;
             case "entregarPedido":
                 String codigo2 = request.getParameter("codigo");
-                PedidoBean pedido = bodegaDao.obtenerPedidoBodega(codigo2);
-                if (pedido != null && pedido.getEstado().equals("Pendiente")) {
+                UsuarioDao usuarioDao3 = new UsuarioDao();
+                PedidoBean pedido = usuarioDao3.obtenerPedido(codigo2);
+                if (pedido != null && pedido.getEstado().equals("Pendiente")
+                        && pedido.getBodegaBean().getIdBodega()==idBodegaActual) {
                     bodegaDao.entregarPedido(codigo2);
                     HttpSession session1 = request.getSession();
                     session1.setAttribute("estado", "entregado");
@@ -436,8 +438,9 @@ public class BodegaServlet extends HttpServlet {
             case "cancelarPedido":
                 UsuarioDao usuarioDao = new UsuarioDao();
                 String codigo3 = request.getParameter("codigo");
-                PedidoBean pedido2 = bodegaDao.obtenerPedidoBodega(codigo3);
-                if( pedido2 != null && pedido2.getEstado().equals("Pendiente")){
+                PedidoBean pedido2 = usuarioDao.obtenerPedido(codigo3);
+                if( pedido2 != null && pedido2.getEstado().equals("Pendiente") &&
+                        pedido2.getBodegaBean().getIdBodega()==idBodegaActual){
                     if (bodegaDao.obtenerPedidoBodega(codigo3) != null) {
                         HttpSession session1 = request.getSession();
 
