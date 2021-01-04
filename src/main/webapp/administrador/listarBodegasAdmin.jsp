@@ -126,12 +126,12 @@
                 <% if(bodega.getEstadoBodega().toLowerCase().equals("activo")){%>
                     <td>
                         <a onclick="return confirm('¿Estas seguro que deseas bloquear?')"
-                           href="<%=request.getContextPath()%>/AdminServlet?accion=bloquear&nombreB=<%=bodega.getNombreBodega()%>&bloqueo=true"
+                           href="<%=request.getContextPath()%>/AdminServlet?accion=bloquear&ruc=<%=bodega.getRucBodega()%>&bloqueo=true"
                            class="btn btn-danger">Bloquear</a>
                     </td>
                 <% }else{%>
                 <td><a onclick="return confirm('¿Estas seguro que deseas activar esta bodega?')"
-                       href="<%=request.getContextPath()%>/AdminServlet?accion=bloquear&nombreB=<%=bodega.getNombreBodega()%>&bloqueo=false"
+                       href="<%=request.getContextPath()%>/AdminServlet?accion=bloquear&ruc=<%=bodega.getRucBodega()%>&bloqueo=false"
                        class="btn btn-activar">Activar</a></td>
                 <%} %>
             </tr>

@@ -246,14 +246,15 @@ public class AdminDao extends BaseDao{
     }
 
 
-    public static boolean pedidoPendiente(String nombreBodega){    //devuelve true si presenta al menos un pedido en estado pendiente
+    public static boolean pedidoPendiente(String ruc){    //devuelve true si presenta al menos un pedido en estado pendiente
         boolean pedidoPendiente = false;
 
-        String sql = "select estado from pedido where idBodega=(select idBodega from bodega where nombreBodega = ?);";
+        String sql = "select estado from pedido where " +
+                "idBodega=(select idBodega from bodega where ruc = ?);";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, nombreBodega);
+            pstmt.setString(1, ruc);
 
             try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -270,16 +271,17 @@ public class AdminDao extends BaseDao{
         return pedidoPendiente;
     }
 
-    public static void actualizarEstadoBodega(String nombreBodega,boolean estado){
+    public static void actualizarEstadoBodega(String ruc,boolean estado){
 
         String sql;
 
         //estado=true -> se bloquea la bodega
-        sql = estado ? "update bodega set estado = \"Bloqueado\" where nombreBodega = ?;" : "update bodega set estado = \"Activo\" where nombreBodega = ?;";
+        sql = estado ? "update bodega set estado = \"Bloqueado\" where " +
+                "ruc = ?;" : "update bodega set estado = \"Activo\" where ruc = ?;";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombreBodega);
+            pstmt.setString(1, ruc);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -389,17 +391,17 @@ public class AdminDao extends BaseDao{
         return idBodega;
     }
 
-    public ArrayList<PedidoBean> buscarBodegaconPedido(String nombreBodega){
+    public ArrayList<PedidoBean> buscarBodegaconPedido(String ruc){
         ArrayList<PedidoBean> lista = new ArrayList<>();
 
         String sql = "select * from bodega b\n" +
                 "inner join pedido p\n" +
                 "on b.idBodega = p.idBodega\n" +
-                "where nombreBodega=?;";
+                "where ruc=?;";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, nombreBodega);
+            pstmt.setString(1, ruc);
 
             try (ResultSet rs = pstmt.executeQuery()) {
 

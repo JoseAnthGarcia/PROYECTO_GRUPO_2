@@ -3,6 +3,7 @@
 <%@ page import="beans.PedidoBean" %>
 <%@ page import="beans.PedidoHasProductoBean" %>
 <%@ page import="daos.UsuarioDao" %>
+<%@ page import="beans.UsuarioBean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="pedidoProductoLista" scope="request" type="java.util.ArrayList<beans.PedidoHasProductoBean>"/>
 <html>
@@ -44,6 +45,9 @@
             <%PedidoBean pedido = pedidoProductoLista.get(0).getPedido();%>
             <h1>Codigo del pedido: <%=pedido.getCodigo()%></h1>
             <h4>Bodega: <%=pedido.getBodegaBean().getNombreBodega()%></h4>
+            <%UsuarioBean cliente = pedido.getUsuario();%>
+            <h4>Cliente: <%=cliente.getNombre()+" "+cliente.getApellido()%></h4>
+            <h4>DNI: <%=cliente.getDni()%></h4>
             <h4>Fecha y hora del registro: <%=pedido.getFecha_registro()%></h4>
             <h4>Fecha y hora de entrega: <%=pedido.getFecha_recojo()%></h4>
             <%UsuarioDao usuarioDao = new UsuarioDao();%>

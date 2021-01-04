@@ -320,15 +320,15 @@ public class AdminServlet extends HttpServlet {
                     requestDispatcher.forward(request,response);
                     break;
                 case "bloquear":
-                    String nombreBodega = request.getParameter("nombreB");
-                    boolean aTiempo = AdminDao.pedidoPendiente(nombreBodega); //devuelve true si presenta al menos un pedido en estado pendiente
+                    String rucBodega = request.getParameter("ruc");
+                    boolean aTiempo = AdminDao.pedidoPendiente(rucBodega); //devuelve true si presenta al menos un pedido en estado pendiente
 
-                    ArrayList<PedidoBean> listaPedidos = bodegaDao.buscarBodegaconPedido(nombreBodega);
+                    ArrayList<PedidoBean> listaPedidos = bodegaDao.buscarBodegaconPedido(rucBodega);
 
-                    if(!aTiempo){
+                    if(!aTiempo && bodegaDao.validarPerteneceAdmin(rucBodega, idAdminActual)){
                         boolean bloqueo = Boolean.parseBoolean(request.getParameter("bloqueo"));
                         request.getSession().setAttribute("accion", bloqueo);
-                        AdminDao.actualizarEstadoBodega(nombreBodega,bloqueo);
+                        AdminDao.actualizarEstadoBodega(rucBodega,bloqueo);
                         response.sendRedirect(request.getContextPath() +"/AdminServlet?accion=listar");
                     }else{
                         request.getSession().setAttribute("errorBloquearBodega", true);
@@ -337,10 +337,10 @@ public class AdminServlet extends HttpServlet {
                     }
                     break;
                 case "mostrarBodega":
-                    String rucBodega = request.getParameter("ruc");
+                    String rucBodega2 = request.getParameter("ruc");
                     AdminDao adminDao = new AdminDao();
-                    if(adminDao.buscarIdBodega(rucBodega)>0 && adminDao.validarPerteneceAdmin(rucBodega, idAdminActual)){
-                        BodegaBean bodega = adminDao.buscarBodega(rucBodega);
+                    if(adminDao.buscarIdBodega(rucBodega2)>0 && adminDao.validarPerteneceAdmin(rucBodega2, idAdminActual)){
+                        BodegaBean bodega = adminDao.buscarBodega(rucBodega2);
                         request.setAttribute("bodega",bodega);
                         view = request.getRequestDispatcher("administrador/mostrarBodega.jsp");
                         view.forward(request, response);
