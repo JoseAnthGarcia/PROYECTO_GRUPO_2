@@ -18,7 +18,7 @@ _Para el presente proyecto se utilizaron las siguientes herramientas:_
 
 _Los integrantes del equipo fueron los siguientes:_
 
-* **Garcia Macavilca, Jose Anthony** - *Estudiant - Jefe de grupo*
+* **Garcia Macavilca, Jose Anthony** - *EstudiantE - Jefe de grupo*
 * **Bolivar De La Cruz, Victor Manuel** - *Estudiante*
 * **Ortiz Quiñonez, Maria Jose** - *Estudiante*
 * **Aquisse Castillo, Lizbeth** - *Estudiante*
