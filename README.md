@@ -1,4 +1,4 @@
-# FOOD DELIVERY - GEEK DEVELOPERS
+# PROYECTO FINAL - GRUPO 2
 
 _El presente proyecto fue desarrollado por alumnos de la especialidad de Ingeniería de las Telecomunicaciones de la Facultad de Ciencias e Ingeniería - Pontificia Universidad Católica del Perú. El proyecto fue desarrollado a lo largo del sexto ciclo y se presentó ante el profesor a cargo al finalizar dicho ciclo._
 
